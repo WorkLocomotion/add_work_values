@@ -1,0 +1,26 @@
+﻿# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Data (keep templates only) ---
+data/
+output/
+~$*.xlsx        # Excel lock files
+*.xlsx~         # temp backups
+# Ignore all Excel by default...
+*.xlsx
+# ...but keep the sample template if you have one
+!templates/sample_input.xlsx
+
+# --- Logs / cache ---
+*.log
+.cache/
