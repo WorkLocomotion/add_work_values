@@ -1,4 +1,5 @@
 # Work Values Enrichment
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/WorkLocomotion/enrich_work_values/blob/main/Enrich_Work_Values.ipynb)
 
 Enrich a matched list of company job titles with O*NET Work Values scores and export a consolidated Excel file.
 
