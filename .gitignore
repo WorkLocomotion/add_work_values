@@ -24,3 +24,5 @@ output/
 # --- Logs / cache ---
 *.log
 .cache/
+
+!Work Values.xlsx
