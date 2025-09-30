@@ -16,6 +16,28 @@ try:
 except ImportError:
     requests = None  # Will be available if installed via requirements
 
+def canonicalize_soc(df):
+    """
+    Ensure the dataframe has a single 'SOC Code' column.
+    Accepts common variants (e.g., 'O*NET-SOC Code', 'O*NET SOC Code', 'SOC', 'Code').
+    Renames the first match to 'SOC Code' and drops the rest.
+    """
+    # normalize header whitespace
+    df.columns = [c.strip() for c in df.columns]
+
+    variants = ["O*NET-SOC Code", "O*NET SOC Code", "SOC Code", "SOC", "Code"]
+    # if 'SOC Code' not present, promote the first variant to 'SOC Code'
+    if "SOC Code" not in df.columns:
+        for c in variants:
+            if c in df.columns:
+                df = df.rename(columns={c: "SOC Code"})
+                break
+    # drop any remaining aliases so only 'SOC Code' remains
+    for c in variants:
+        if c != "SOC Code" and c in df.columns:
+            df = df.drop(columns=[c])
+    return df
+
 # Canonical Work Values order
 VALUE_COLS_CANON = [
     "Achievement",
@@ -274,6 +296,7 @@ def main(argv: List[str] = None) -> int:
 
     # Normalize/standardize input columns
     in_df["SOC Code"] = in_df[soc_col_in].apply(norm_soc)
+    in_df = canonicalize_soc(in_df)  # drop aliases like 'O*NET-SOC Code'
 
     if headcount_col is None:
         in_df["HeadCount"] = 1
